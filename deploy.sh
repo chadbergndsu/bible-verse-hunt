@@ -1,12 +1,19 @@
 #!/bin/bash
 set -euo pipefail
 
-GH="/tmp/gh_2.69.0_macOS_arm64/bin/gh"
+GH="${GH_BIN:-$(command -v gh || echo /tmp/gh_2.69.0_macOS_arm64/bin/gh)}"
 REPO_NAME="bible-verse-hunt"
 
+if ! command -v "$GH" &>/dev/null && [ ! -x "$GH" ]; then
+  echo "GitHub CLI not found. Install it: brew install gh"
+  exit 1
+fi
+
 if ! "$GH" auth status &>/dev/null; then
-  echo "Not logged into GitHub. Run this first:"
+  echo "Not logged into GitHub yet. Run:"
   echo "  $GH auth login"
+  echo "Then run this script again:"
+  echo "  ./deploy.sh"
   exit 1
 fi
 
