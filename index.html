@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verse Hunt — Type the Scripture</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="bg-texture" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="logo">
+      <span class="logo-icon">✦</span>
+      <h1>Verse Hunt</h1>
+    </div>
+    <div class="header-stats" id="headerStats" hidden>
+      <div class="stat">
+        <span class="stat-label">Score</span>
+        <span class="stat-value" id="totalScore">0</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Streak</span>
+        <span class="stat-value" id="streak">0</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="screen screen-menu active" id="menuScreen">
+      <div class="card hero-card">
+        <p class="eyebrow">A Bible memory challenge</p>
+        <h2>Find the verse, type the opening words</h2>
+        <p class="lead">
+          You get a random scripture reference and a countdown timer.
+          Look it up in your Bible, then type the <strong>first 3 words</strong> of that verse to stop the clock.
+        </p>
+
+        <div class="settings">
+          <label class="setting">
+            <span>Timer</span>
+            <select id="timerSelect">
+              <option value="30">30 seconds</option>
+              <option value="45">45 seconds</option>
+              <option value="60" selected>60 seconds</option>
+              <option value="90">90 seconds</option>
+              <option value="120">2 minutes</option>
+            </select>
+          </label>
+          <label class="setting">
+            <span>Verse pool</span>
+            <select id="poolSelect">
+              <option value="">Entire Bible</option>
+              <option value="NT">New Testament only</option>
+              <option value="OT">Old Testament only</option>
+              <option value="MAT,MRK,LUK,JHN">Gospels only</option>
+              <option value="PSA">Psalms only</option>
+            </select>
+          </label>
+          <label class="setting">
+            <span>Translation</span>
+            <select id="translationSelect">
+              <option value="kjv" selected>King James Version</option>
+              <option value="web">World English Bible</option>
+              <option value="asv">American Standard Version</option>
+            </select>
+          </label>
+        </div>
+
+        <button class="btn btn-primary btn-lg" id="startBtn">Start Game</button>
+      </div>
+
+      <div class="card how-to">
+        <h3>How to play</h3>
+        <ol>
+          <li>A random reference appears (e.g. <em>John 3:16</em>) and the timer starts.</li>
+          <li>Look up that verse in a Bible matching your chosen translation.</li>
+          <li>Type the first 3 words exactly as they appear in that translation.</li>
+          <li>Get it right before time runs out to score points.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="screen screen-game" id="gameScreen">
+      <div class="target-panel card">
+        <div class="target-header">
+          <span class="target-label">Find this verse</span>
+          <div class="timer-wrap">
+            <svg class="timer-ring" viewBox="0 0 36 36">
+              <circle class="timer-ring-bg" cx="18" cy="18" r="15.5"></circle>
+              <circle class="timer-ring-fill" id="timerRing" cx="18" cy="18" r="15.5"></circle>
+            </svg>
+            <span class="timer-text" id="timerDisplay">60</span>
+          </div>
+        </div>
+        <p class="target-reference" id="targetReference">—</p>
+        <p class="target-hint">Look it up, then type the first 3 words below.</p>
+      </div>
+
+      <div class="answer-panel card">
+        <label class="answer-label" for="answerInput">First 3 words</label>
+
+        <div class="word-progress" id="wordProgress" aria-label="Word progress">
+          <span class="word-slot" data-slot="0"></span>
+          <span class="word-slot" data-slot="1"></span>
+          <span class="word-slot" data-slot="2"></span>
+        </div>
+
+        <form class="answer-form" id="answerForm">
+          <input
+            type="text"
+            id="answerInput"
+            class="answer-input"
+            placeholder="Type the first 3 words…"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+            disabled
+          >
+          <button type="submit" class="btn btn-primary" id="submitBtn" disabled>Check</button>
+        </form>
+
+        <p class="answer-feedback" id="answerFeedback" aria-live="polite"></p>
+
+        <p class="translation-note" id="translationNote"></p>
+      </div>
+    </section>
+
+    <div class="overlay" id="resultOverlay" hidden>
+      <div class="result-card card" id="resultCard">
+        <div class="result-icon" id="resultIcon">✓</div>
+        <h2 id="resultTitle">Got it!</h2>
+        <p class="result-reference" id="resultReference"></p>
+        <blockquote class="result-verse" id="resultVerse"></blockquote>
+        <p class="result-answer" id="resultAnswer"></p>
+        <p class="result-score" id="resultScore"></p>
+        <div class="result-actions">
+          <button class="btn btn-primary" id="nextBtn">Next Verse</button>
+          <button class="btn btn-ghost" id="menuBtn">Main Menu</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    Scripture text via <a href="https://bible-api.com" target="_blank" rel="noopener">bible-api.com</a>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

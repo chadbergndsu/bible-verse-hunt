@@ -1,0 +1,6 @@
+{
+  "version": 2,
+  "name": "verse-hunt",
+  "builds": [{ "src": "**/*", "use": "@vercel/static" }],
+  "routes": [{ "src": "/(.*)", "dest": "/$1" }]
+}
