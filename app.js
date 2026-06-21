@@ -20,6 +20,7 @@ const $ = (id) => document.getElementById(id);
 const elements = {
   menuScreen: $('menuScreen'),
   gameScreen: $('gameScreen'),
+  headerNav: $('headerNav'),
   headerStats: $('headerStats'),
   totalScore: $('totalScore'),
   streak: $('streak'),
@@ -91,6 +92,7 @@ function showScreen(name) {
   elements.menuScreen.classList.toggle('active', name === 'menu');
   elements.gameScreen.classList.toggle('active', name === 'game');
   elements.headerStats.hidden = name !== 'game';
+  if (elements.headerNav) elements.headerNav.hidden = name === 'game';
 }
 
 function updateStats() {
